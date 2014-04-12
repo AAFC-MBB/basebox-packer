@@ -8,7 +8,7 @@ ifdef PROVISIONER_VERSION
 else
 	PACKER_VARS := -var 'provisioner=$(PROVISIONER)'
 endif
-BUILDER_TYPES = vmware virtualbox
+BUILDER_TYPES = vmware virtualbox parallels
 TEMPLATE_PATHS := $(wildcard template/*/*.json)
 TEMPLATE_FILENAMES := $(notdir ${TEMPLATE_PATHS})
 TEMPLATE_DIRS := $(dir ${TEMPLATE_PATHS})
@@ -20,6 +20,13 @@ vpath %.json template/centos:template/debian:template/fedora:template/freebsd:te
 
 .PHONY: all
 all: $(BOX_FILES)
+
+parallels/%-$(PROVISIONER)$(PROVISIONER_VERSION).box: %.json
+	cd $(dir $<); \
+	rm -rf output-parallels-iso; \
+	mkdir -p ../../parallels; \
+	packer build -only=parallels-iso $(PACKER_VARS) $(notdir $<)
+
 
 vmware/%-$(PROVISIONER)$(PROVISIONER_VERSION).box: %.json
 	cd $(dir $<); \
