@@ -74,6 +74,8 @@
     "disk_size": 10140,
     "guest_os_type": "linux",
     "guest_os_distribution": "ubuntu",
+    "parallels_tools_url": "/Applications/Parallels Desktop.app/Contents/Resources/Tools/prl-tools-lin.iso",
+    "parallels_tools_path": "/home/vagrant/prl-tools-lin.iso",
     "prlctl": [
       ["set", "{{.Name}}", "--memsize", "512"],
       ["set", "{{.Name}}", "--cpus", "1"]
